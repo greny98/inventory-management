@@ -1,0 +1,22 @@
+{
+  "env": "test",
+  "dbConfig": {
+    "host": "localhost",
+    "user": "root",
+    "password": "tuan1234",
+    "database": "inventory_management",
+    "pool": {
+      "min": 0,
+      "max": 5
+    }
+  },
+  "secretKey": "secretKey",
+  "log": {
+    "format": "dev",
+    "dir": "../logs"
+  },
+  "cors": {
+    "origin": true,
+    "credentials": true
+  }
+}
