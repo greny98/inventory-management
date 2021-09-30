@@ -18,7 +18,7 @@ class CategoryService {
     if (findCategory) {
       throw new HttpException(409, `Your category ${categoryData.name} already exists`);
     }
-
+    // create new category
     return this.categories.create({ ...categoryData });
   }
 }
