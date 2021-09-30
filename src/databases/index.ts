@@ -4,6 +4,11 @@ import { dbConfig } from '@interfaces/db.interface';
 import UserModel from '@models/users.model';
 import ProductModel from '@models/products.model';
 import { logger } from '@utils/logger';
+import CategoryModel from '@/models/categories.model';
+import CustomerModel from '@/models/customers.model';
+import DistributorModel from '@/models/distributors.model';
+import InventoryModel from '@/models/inventories.model';
+import ProductRankModel from '@/models/productRank.model';
 
 const { host, user, password, database, pool }: dbConfig = config.get('dbConfig');
 const sequelize = new Sequelize.Sequelize(database, user, password, {
@@ -32,6 +37,11 @@ sequelize.authenticate();
 const DB = {
   Users: UserModel(sequelize),
   Products: ProductModel(sequelize),
+  Categories: CategoryModel(sequelize),
+  Customers: CustomerModel(sequelize),
+  Distributors: DistributorModel(sequelize),
+  Inventories: InventoryModel(sequelize),
+  ProductRank: ProductRankModel(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };
