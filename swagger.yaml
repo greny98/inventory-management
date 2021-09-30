@@ -4,10 +4,10 @@ tags:
 
 paths:
 # [GET] users
-  /users:
+  /:
     get:
       tags:
-      - users
+      - customers
       summary: Find All Users
       responses:
         200:

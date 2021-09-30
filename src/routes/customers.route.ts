@@ -14,6 +14,11 @@ class CustomersRoute implements Routes {
   }
 
   private initializeRoutes() {
+    // Get all customers pagination
+    this.router.get(`${this.path}`, this.customersController.getAllCustomers);
+    // Search via phone
+    this.router.get(`${this.path}/search`, this.customersController.searchCustomer);
+    // Create customer
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateCustomerDto, 'body'),
