@@ -1,7 +1,7 @@
-export interface IProductOrder {
+export interface IProductStockIn {
   id: number;
   prodId: number;
-  orderId: number;
+  billId: number;
   quantity: number;
   discount: number;
   createdAt: Date;
