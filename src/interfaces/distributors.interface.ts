@@ -3,5 +3,5 @@ export interface IDistributor {
   name: string;
   phone: string;
   address: string;
-  createdAt: Date;
+  createdAt?: Date;
 }

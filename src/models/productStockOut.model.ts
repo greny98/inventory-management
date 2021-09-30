@@ -37,6 +37,7 @@ export default function (sequelize: Sequelize): typeof ProductStockOutModel {
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: new Date(),
       },
     },
     {
