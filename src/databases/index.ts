@@ -8,6 +8,11 @@ import StockOutModel from '@models/stockOut.model';
 import ProductStockOutModel from '@models/productStockOut.model';
 import StockInModel from '@models/stockIn.model';
 import ProductStockInModel from '@models/productStockIn.model';
+import CategoryModel from '@/models/categories.model';
+import CustomerModel from '@/models/customers.model';
+import DistributorModel from '@/models/distributors.model';
+import InventoryModel from '@/models/inventories.model';
+import ProductRankModel from '@/models/productRank.model';
 
 const { host, user, password, database, pool }: dbConfig = config.get('dbConfig');
 const sequelize = new Sequelize.Sequelize(database, user, password, {
@@ -40,7 +45,11 @@ const DB = {
   ProductStockOut: ProductStockOutModel(sequelize),
   StockIn: StockInModel(sequelize),
   ProductStockIn: ProductStockInModel(sequelize),
-
+  Categories: CategoryModel(sequelize),
+  Customers: CustomerModel(sequelize),
+  Distributors: DistributorModel(sequelize),
+  Inventories: InventoryModel(sequelize),
+  ProductRank: ProductRankModel(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };
