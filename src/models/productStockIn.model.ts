@@ -37,6 +37,7 @@ export default function (sequelize: Sequelize): typeof ProductStockInModel {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        defaultValue: new Date(),
       },
     },
     {

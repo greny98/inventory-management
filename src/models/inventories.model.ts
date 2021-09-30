@@ -27,6 +27,7 @@ export default function (sequelize: Sequelize): typeof InventoryModel {
       lastUpdatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        defaultValue: new Date(),
       },
     },
     {

@@ -30,8 +30,8 @@ export default function (sequelize: Sequelize): typeof DistributorModel {
         type: DataTypes.STRING,
       },
       createdAt: {
-        allowNull: false,
         type: DataTypes.DATE,
+        defaultValue: new Date(),
       },
     },
     {
