@@ -4,7 +4,7 @@ import validationMiddleware from '@middlewares/validation.middleware';
 import CategoryController from '@/controllers/categories.controller';
 import { CreateCategoryDto } from '@/dtos/categories.dto';
 
-class CategoryRoute implements Routes {
+class CategoriesRoute implements Routes {
   public path = '/categories';
   public router = Router();
   public categoryController = new CategoryController();
@@ -22,4 +22,4 @@ class CategoryRoute implements Routes {
   }
 }
 
-export default CategoryRoute;
+export default CategoriesRoute;

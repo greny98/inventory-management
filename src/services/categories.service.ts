@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
