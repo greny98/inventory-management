@@ -1,6 +1,6 @@
 export interface IInventory {
   id: number;
-  prodId: number;
+  productId: number;
   quantity: number;
-  createdAt: Date;
+  lastUpdatedAt: Date;
 }
