@@ -1,5 +1,5 @@
 export interface IProductRank {
-  id: number;
+  id?: number;
   productId: number;
   month: Date;
   year: Date;

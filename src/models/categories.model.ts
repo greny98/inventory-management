@@ -2,7 +2,6 @@ import { ICategories } from '@/interfaces/categories.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 
 export class CategoryModel extends Model<ICategories> implements ICategories {
-  id: number;
   name: string;
 }
 

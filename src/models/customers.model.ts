@@ -3,7 +3,6 @@ import { ICustomer } from '@interfaces/customers.interface';
 
 export class CustomerModel extends Model<ICustomer> implements ICustomer {
   address: string;
-  id: number;
   name: string;
   phone: string;
 }

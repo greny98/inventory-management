@@ -1,5 +1,5 @@
 export interface IStockOut {
-  id: number;
+  id?: number;
   customerId: number;
   createdAt: Date;
 }

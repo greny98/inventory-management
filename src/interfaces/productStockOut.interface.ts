@@ -1,5 +1,5 @@
 export interface IProductStockOut {
-  id: number;
+  id?: number;
   productId: number;
   stockOutId: number;
   quantity: number;
