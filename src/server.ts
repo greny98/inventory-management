@@ -1,3 +1,5 @@
+import CustomersRoute from '@routes/customers.route';
+
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
 import 'dotenv/config';
@@ -9,6 +11,6 @@ import validateEnv from '@utils/validateEnv';
 
 validateEnv();
 
-const app = new App([new IndexRoute(), new UsersRoute(), new AuthRoute()]);
+const app = new App([new IndexRoute(), new UsersRoute(), new AuthRoute(), new CustomersRoute()]);
 
 app.listen();
