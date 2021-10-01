@@ -19,7 +19,6 @@ class CustomersController {
   public searchCustomer: RequestHandler<any, any, ISearchCustomers, any> = async (req, res, next) => {
     try {
       const customerQuery: SearchCustomerDto = req.query;
-      console.log(req.query);
       const customer = await this.customerService.searchCustomer(customerQuery.phone);
       res.json({ data: { customer } });
     } catch (error) {

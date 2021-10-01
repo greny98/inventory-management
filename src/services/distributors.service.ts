@@ -7,6 +7,16 @@ import { IDistributor } from '@interfaces/distributors.interface';
 class DistributorService {
   public distributorModel = DB.Distributors;
 
+  public async getAlDistributors(page: number): Promise<IDistributor[]> {
+    const limit = 10;
+    const offset = page * limit;
+    return this.distributorModel.findAll({ limit, offset });
+  }
+
+  public async searchDistributor(phone: string): Promise<IDistributor> {
+    return this.distributorModel.findOne({ where: { phone } });
+  }
+
   public async createDistributor(distributorData: CreateDistributorDto): Promise<IDistributor> {
     // Check empty
     if (isEmpty(distributorData)) throw new HttpException(400, "Distributor's information is empty!");

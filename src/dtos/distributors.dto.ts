@@ -10,3 +10,8 @@ export class CreateDistributorDto {
   @IsPhoneNumber()
   public phone: string;
 }
+
+export class SearchDistributorDto {
+  @IsPhoneNumber()
+  public phone: string;
+}
