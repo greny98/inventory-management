@@ -36,6 +36,28 @@ class CategoryController {
       next(error);
     }
   };
+
+  public updateCategory: RequestHandler = async (req, res, next) => {
+    try {
+      const categoryId = Number(req.params.id);
+      const categoryData: CreateCategoryDto = req.body;
+      const updateCategoryData: ICategories = await this.categoryService.updateCategory(categoryId, categoryData);
+      res.json({ data: updateCategoryData, message: 'updated' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public deleteCategory: RequestHandler = async (req, res, next) => {
+    try {
+      const categoryId = Number(req.params.id);
+      const deleteCategoryData: ICategories = await this.categoryService.deleteCategory(categoryId);
+
+      res.json({ data: deleteCategoryData, message: 'deleted' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default CategoryController;

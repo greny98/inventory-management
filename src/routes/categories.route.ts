@@ -24,6 +24,13 @@ class CategoriesRoute implements Routes {
       validationMiddleware(CreateCategoryDto, 'body'),
       this.categoryController.createCategory,
     );
+    // update category
+    this.router.put(
+      `${this.path}/:id(\\d+)`,
+      validationMiddleware(CreateCategoryDto, 'body'),
+      this.categoryController.updateCategory,
+    );
+    this.router.delete(`${this.path}/:id(\\d+)`, this.categoryController.deleteCategory);
   }
 }
 
