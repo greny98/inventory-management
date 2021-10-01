@@ -4,3 +4,7 @@ export interface IInventory {
   quantity: number;
   lastUpdatedAt: Date;
 }
+
+export interface IGetAllInventories {
+  page?: number;
+}

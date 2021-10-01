@@ -9,6 +9,8 @@ import CustomersRoute from '@routes/customers.route';
 import validateEnv from '@utils/validateEnv';
 import CategoriesRoute from '@routes/categories.route';
 import ProductRoute from './routes/products.route';
+import InventoriesRoute from './routes/inventories.route';
+import StockInRoute from './routes/stockIn.route';
 
 validateEnv();
 
@@ -19,6 +21,8 @@ const app = new App([
   new CustomersRoute(),
   new CategoriesRoute(),
   new ProductRoute(),
+  new InventoriesRoute(),
+  new StockInRoute(),
 ]);
 
 app.listen();

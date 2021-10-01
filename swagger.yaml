@@ -3,10 +3,10 @@ tags:
   - name: distributors
   - name: categories
   - name: products
+  - name: inventories
 
 paths:
   # =========================================[Customers]=======================================================
-  # [GET]
   /customers:
     # [GET] All customers
     get:
@@ -61,7 +61,6 @@ paths:
                 $ref: '#/definitions/customer'
               message:
                 type: string
-
   # =========================================[Distributor]=======================================================
   /distributors:
     # [GET] All distributors
@@ -223,6 +222,28 @@ paths:
                 $ref: '#/definitions/product'
               message:
                 type: string
+  # =========================================[Inventories]=======================================================
+  /inventories:
+    # [GET] All inventories
+    get:
+      tags:
+        - inventories
+      summary: List all inventories
+      parameters:
+        - name: page
+          type: integer
+          in: query
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/definitions/inventory'
 
 # definitions
 definitions:
@@ -284,6 +305,18 @@ definitions:
         type: number
       image:
         type: string
+  inventory:
+    type: object
+    properties:
+      id:
+        type: integer
+      productId:
+        type: integer
+      quantity:
+        type: integer
+      lastUpdatedAt:
+        type: string
+        format: date-time
 
 schemes:
   - https
