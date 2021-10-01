@@ -1,126 +1,290 @@
 tags:
-- name: users
-  description: users API
+  - name: customers
+  - name: distributors
+  - name: categories
+  - name: products
 
 paths:
-# [GET] users
-  /:
+  # =========================================[Customers]=======================================================
+  # [GET]
+  /customers:
+    # [GET] All customers
     get:
       tags:
-      - customers
-      summary: Find All Users
+        - customers
+      parameters:
+        - in: query
+          name: page
+          type: integer
+      summary: List all customers
       responses:
         200:
           description: 'OK'
-        500:
-          description: 'Server Error'
-
-# [POST] users
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  customers:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/definitions/customer'
+    # [POST] Create customer
     post:
       tags:
-      - users
-      summary: Add User
+        - customers
+      summary: Add Customer
       parameters:
-      - name: body
-        in: body
-        description: user Data
-        required: true
-        schema:
-          $ref: '#/definitions/users'
+        - name: body
+          in: body
+          description: Customer Data
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              phone:
+                type: string
+              address:
+                type: string
       responses:
         201:
           description: 'Created'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                $ref: '#/definitions/customer'
+              message:
+                type: string
 
-# [GET] users/id
-  /users/{id}:
+  # =========================================[Distributor]=======================================================
+  /distributors:
+    # [GET] All distributors
     get:
       tags:
-      - users
-      summary: Find User By Id
+        - distributors
       parameters:
-      - name: id
-        in: path
-        description: User Id
-        required: true
-        type: integer
+        - in: query
+          name: page
+          type: integer
+      summary: List all customers
       responses:
         200:
           description: 'OK'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
-
-# [PUT] users/id
-    put:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  customers:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/definitions/distributor'
+    # [POST] Create distributor
+    post:
       tags:
-      - users
-      summary: Update User By Id
+        - distributors
+      summary: Add Distributor
       parameters:
-      - name: id
-        in: path
-        description: user Id
-        required: true
-        type: integer
-      - name: body
-        in: body
-        description: user Data
-        required: true
-        schema:
-          $ref: '#/definitions/users'
+        - name: body
+          in: body
+          description: Distributor Data
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              phone:
+                type: string
+              address:
+                type: string
       responses:
-        200:
-          description: 'OK'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
+        201:
+          description: 'Created'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                $ref: '#/definitions/distributor'
+              message:
+                type: string
 
-# [DELETE] users/id
-    delete:
+  # =========================================[Categories]=======================================================
+  /categories:
+    # [GET] All categories
+    get:
       tags:
-      - users
-      summary: Delete User By Id
+        - categories
       parameters:
-      - name: id
-        in: path
-        description: user Id
-        required: true
-        type: integer
+        - in: query
+          name: page
+          type: integer
+      summary: List all categories
       responses:
         200:
           description: 'OK'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    quantity:
+                      description: 'Number of products in this category'
+                      type: integer
+    # [POST]
+    post:
+      tags:
+        - categories
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+      summary: Create new category
+      responses:
+        201:
+          description: 'Created'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                $ref: '#/definitions/category'
+              message:
+                type: string
+  # =========================================[Products]=======================================================
+  /products:
+    # [GET] All products
+    get:
+      tags:
+        - products
+      parameters:
+        - in: query
+          name: page
+          type: integer
+      summary: List all products
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/definitions/product'
+    # [POST]
+    post:
+      tags:
+        - products
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              categoryId:
+                type: integer
+              purchasePrice:
+                type: number
+              price:
+                type: number
+              image:
+                type: string
+      summary: Create new product
+      responses:
+        201:
+          description: 'Created'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                $ref: '#/definitions/product'
+              message:
+                type: string
 
 # definitions
 definitions:
-  users:
+  customer:
     type: object
     required:
-        - email
-        - password
+      - name
+      - phone
+      - address
     properties:
       id:
         type: integer
-        description: user Id
-      email:
+      name:
         type: string
-        description: user Email
-      password:
+      phone:
         type: string
-        description: user Password
+      address:
+        type: string
+  distributor:
+    type: object
+    required:
+      - name
+      - phone
+      - address
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      phone:
+        type: string
+      address:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+  category:
+    type: object
+    required:
+      - name
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+  product:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      category:
+        type: object
+        $ref: '#/definitions/category'
+      purchasePrice:
+        type: number
+      price:
+        type: number
+      image:
+        type: string
 
 schemes:
- - https
- - http
+  - https
+  - http
