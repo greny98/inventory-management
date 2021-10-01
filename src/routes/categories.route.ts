@@ -14,11 +14,23 @@ class CategoriesRoute implements Routes {
   }
 
   private initializeRoutes() {
+    // get all categories pagination
+    this.router.get(`${this.path}`, this.categoryController.getAllCategories);
+    // search category by name
+    this.router.get(`${this.path}/search`, this.categoryController.searchCategory);
+    // create category
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateCategoryDto, 'body'),
       this.categoryController.createCategory,
     );
+    // update category
+    this.router.put(
+      `${this.path}/:id(\\d+)`,
+      validationMiddleware(CreateCategoryDto, 'body'),
+      this.categoryController.updateCategory,
+    );
+    this.router.delete(`${this.path}/:id(\\d+)`, this.categoryController.deleteCategory);
   }
 }
 
