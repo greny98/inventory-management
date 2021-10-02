@@ -1,10 +1,3 @@
-tags:
-  - name: customers
-  - name: distributors
-  - name: categories
-  - name: products
-  - name: inventories
-
 paths:
   # =========================================[Customers]=======================================================
   /customers:
@@ -71,7 +64,7 @@ paths:
         - in: query
           name: page
           type: integer
-      summary: List all customers
+      summary: List all distributors
       responses:
         200:
           description: 'OK'
@@ -81,7 +74,7 @@ paths:
               data:
                 type: object
                 properties:
-                  customers:
+                  distributors:
                     type: array
                     items:
                       type: object
@@ -139,11 +132,11 @@ paths:
                 items:
                   type: object
                   properties:
-                    name:
-                      type: string
-                    quantity:
-                      description: 'Number of products in this category'
-                      type: integer
+                    categories:
+                      type: array
+                      items:
+                        type: object
+                        $ref: '#/definitions/category'
     # [POST]
     post:
       tags:
@@ -186,10 +179,13 @@ paths:
             type: object
             properties:
               data:
-                type: array
-                items:
-                  type: object
-                  $ref: '#/definitions/product'
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/definitions/product'
     # [POST]
     post:
       tags:
@@ -240,10 +236,13 @@ paths:
             type: object
             properties:
               data:
-                type: array
-                items:
-                  type: object
-                  $ref: '#/definitions/inventory'
+                type: object
+                properties:
+                  inventories:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/definitions/inventory'
 
 # definitions
 definitions:

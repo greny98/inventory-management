@@ -4,7 +4,7 @@ import validationMiddleware from '@middlewares/validation.middleware';
 import DistributorsController from '@controllers/distributors.controller';
 import { CreateDistributorDto } from '@dtos/distributors.dto';
 
-class CustomersRoute implements Routes {
+class DistributorsRoute implements Routes {
   public path = '/distributors';
   public router = Router();
   public distributorsController = new DistributorsController();
@@ -27,4 +27,4 @@ class CustomersRoute implements Routes {
   }
 }
 
-export default CustomersRoute;
+export default DistributorsRoute;

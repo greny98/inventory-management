@@ -9,7 +9,7 @@ class InventoriesService {
   public async getAllInventories(page: number): Promise<IInventory[]> {
     const limit = 10;
     const offset = page * limit;
-    return this.inventories.findAll({ limit: offset });
+    return this.inventories.findAll({ limit, offset });
   }
 }
 

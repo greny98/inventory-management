@@ -20,6 +20,12 @@ class ProductService {
     // create new Product
     return this.products.create({ ...productData });
   }
+
+  public async getAllProducts(page: number): Promise<IProduct[]> {
+    const limit = 10;
+    const offset = page * limit;
+    return this.products.findAll({ limit, offset });
+  }
 }
 
 export default ProductService;

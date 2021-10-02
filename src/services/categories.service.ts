@@ -24,7 +24,7 @@ class CategoryService {
   public async getAllCategories(page: number): Promise<ICategories[]> {
     const limit = 10;
     const offset = page * limit;
-    return this.categories.findAll({ limit: offset });
+    return this.categories.findAll({ limit, offset });
   }
 
   public searchCategory(name: string): Promise<ICategories> {

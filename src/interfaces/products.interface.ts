@@ -6,3 +6,7 @@ export interface IProduct {
   price: number;
   image?: string;
 }
+
+export interface IGetAllProducts {
+  page?: number;
+}
