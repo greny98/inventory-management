@@ -1,3 +1,24 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+
+tags:
+  - name: customers
+  - name: distributors
+  - name: categories
+  - name: products
+  - name: inventories
+
 paths:
   # =========================================[Customers]=======================================================
   /customers:
@@ -243,6 +264,25 @@ paths:
                     items:
                       type: object
                       $ref: '#/definitions/inventory'
+    post:
+      tags:
+        - inventories
+      summary: Create new inventory
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              productId:
+                type: integer
+              quantity:
+                type: integer
+      responses:
+        200:
+          description: 'Created'
+          schema:
+            $ref: '#/definitions/category'
 
 # definitions
 definitions:
