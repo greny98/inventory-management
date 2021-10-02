@@ -1,5 +1,6 @@
 import { IProductRank } from '@/interfaces/productRank.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import { ProductModel } from '@models/products.model';
 
 export class ProductRankModel extends Model<IProductRank> implements IProductRank {
   id: number;
@@ -20,6 +21,10 @@ export default function (sequelize: Sequelize): typeof ProductRankModel {
       productId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: {
+          key: 'id',
+          model: ProductModel,
+        },
       },
       month: {
         allowNull: false,

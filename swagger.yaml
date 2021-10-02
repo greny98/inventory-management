@@ -1,16 +1,16 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
-  version: "1.0.0"
-  title: "Swagger Petstore"
-  termsOfService: "http://swagger.io/terms/"
+  description: 'This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.'
+  version: '1.0.0'
+  title: 'Swagger Petstore'
+  termsOfService: 'http://swagger.io/terms/'
   contact:
-    email: "apiteam@swagger.io"
+    email: 'apiteam@swagger.io'
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
-basePath: "/v2"
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'petstore.swagger.io'
+basePath: '/v2'
 
 tags:
   - name: customers
@@ -18,6 +18,8 @@ tags:
   - name: categories
   - name: products
   - name: inventories
+  - name: stock_in
+  - name: stock_out
 
 paths:
   # =========================================[Customers]=======================================================
@@ -130,7 +132,6 @@ paths:
                 $ref: '#/definitions/distributor'
               message:
                 type: string
-
   # =========================================[Categories]=======================================================
   /categories:
     # [GET] All categories
@@ -149,15 +150,13 @@ paths:
             type: object
             properties:
               data:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    categories:
-                      type: array
-                      items:
-                        type: object
-                        $ref: '#/definitions/category'
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/definitions/category'
     # [POST]
     post:
       tags:
@@ -283,6 +282,64 @@ paths:
           description: 'Created'
           schema:
             $ref: '#/definitions/category'
+  # =========================================[Stock In]=======================================================
+  /stock_in:
+    get:
+      tags:
+        - stock_in
+      summary: Get all stock in information
+      parameters:
+        - name: page
+          type: integer
+          in: query
+      responses:
+        200:
+          description: 'List of stock in'
+          schema:
+            $ref: '#/definitions/stock_in'
+    post:
+      tags:
+        - stock_in
+      summary: Create new stock in
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/stock_in'
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/stock_in'
+  # =========================================[Stock out]=======================================================
+  /stock_out:
+    get:
+      tags:
+        - stock_out
+      summary: Get all stock out information
+      parameters:
+        - name: page
+          type: integer
+          in: query
+      responses:
+        200:
+          description: 'List of stock out'
+          schema:
+            $ref: '#/definitions/stock_out'
+    post:
+      tags:
+        - stock_out
+      summary: Create new stock out
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/stock_out'
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/stock_out'
 
 # definitions
 definitions:
@@ -328,6 +385,8 @@ definitions:
         type: integer
       name:
         type: string
+      quantityProducts:
+        type: integer
   product:
     type: object
     properties:
@@ -349,13 +408,53 @@ definitions:
     properties:
       id:
         type: integer
-      productId:
-        type: integer
+      product:
+        type: object
+        $ref: '#/definitions/product'
       quantity:
         type: integer
       lastUpdatedAt:
         type: string
         format: date-time
+  stock_in:
+    type: object
+    properties:
+      stockInId:
+        type: integer
+      distributor:
+        type: object
+        $ref: '#/definitions/distributor'
+      products:
+        type: array
+        items:
+          type: object
+          properties:
+            product:
+              type: object
+              $ref: '#/definitions/product'
+            quantity:
+              type: integer
+      discount:
+        type: number
+  stock_out:
+    type: object
+    properties:
+      stockOutId:
+        type: integer
+      customer:
+        $ref: '#/definitions/customer'
+      products:
+        type: array
+        items:
+          type: object
+          properties:
+            product:
+              type: object
+              $ref: '#/definitions/product'
+            quantity:
+              type: integer
+      discount:
+        type: number
 
 schemes:
   - https

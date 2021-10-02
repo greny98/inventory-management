@@ -1,5 +1,6 @@
 import { IStockIn } from '@/interfaces/stockIn.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import { DistributorModel } from '@models/distributors.model';
 
 export class StockInModel extends Model<IStockIn> implements IStockIn {
   id: number;
@@ -18,6 +19,10 @@ export default function (sequelize: Sequelize): typeof StockInModel {
       distributorId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: {
+          key: 'id',
+          model: DistributorModel,
+        },
       },
       createdAt: {
         allowNull: false,

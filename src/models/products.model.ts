@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import { IProduct } from '@interfaces/products.interface';
+import { CategoryModel } from '@models/categories.model';
 
 export type OptionalProductAttributes = Optional<IProduct, 'image'>;
 
@@ -23,6 +24,10 @@ export default function (sequelize: Sequelize): typeof ProductModel {
       categoryId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          key: 'id',
+          model: CategoryModel,
+        },
       },
       name: {
         type: DataTypes.STRING,
