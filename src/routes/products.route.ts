@@ -20,6 +20,11 @@ class ProductRoute implements Routes {
       validationMiddleware(CreateProductDto, 'body'),
       this.productController.createProduct,
     );
+    this.router.put(
+      `${this.path}/:productId`,
+      validationMiddleware(CreateProductDto, 'body'),
+      this.productController.updateProduct,
+    );
   }
 }
 

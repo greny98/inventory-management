@@ -19,9 +19,20 @@ class ProductsController {
 
   public getAllProduct: RequestHandler = async (req, res, next) => {
     try {
-      const { page = 0 } = req.query as IGetAllProducts;
-      const products: IProduct[] = await this.productService.getAllProducts(page);
+      const { page = 0, categories, name } = req.query as IGetAllProducts;
+      const products: IProduct[] = await this.productService.getAllProducts(page, categories, name);
       res.status(201).json({ data: { products } });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public updateProduct: RequestHandler = async (req, res, next) => {
+    try {
+      const { productId } = req.params;
+      const productData = req.body as IProduct;
+      const product: IProduct = await this.productService.updateProduct(productId, productData);
+      res.status(201).json({ data: { product } });
     } catch (error) {
       next(error);
     }

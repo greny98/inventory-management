@@ -191,6 +191,12 @@ paths:
         - in: query
           name: page
           type: integer
+        - name: categories
+          type: integer
+          in: query
+        - name: name
+          type: string
+          in: query
       summary: List all products
       responses:
         200:
@@ -249,6 +255,7 @@ paths:
         - name: page
           type: integer
           in: query
+        
       responses:
         200:
           description: 'OK'
