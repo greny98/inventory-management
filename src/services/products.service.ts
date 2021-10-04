@@ -22,19 +22,26 @@ class ProductService {
     return this.products.create({ ...productData });
   }
 
-  public async getAllProducts(page: number, categories?: number, name?: string): Promise<IProduct[]> {
+  public async getAllProducts(page: number, category?: number, name?: string): Promise<IProduct[]> {
     const limit = 10;
     const offset = page * limit;
     const where = {};
-    if (categories) {
-      where['categories'] = categories;
+    if (category) {
+      where['categoryId'] = category;
     }
     if (name) {
       where['name'] = {
         [Sequelize.Op.like]: `%${name}%`,
       };
     }
-    return this.products.findAll({ limit, offset, where });
+    return this.products.findAll({
+      limit,
+      offset,
+      where,
+      include: {
+        model: DB.Categories,
+      },
+    });
   }
 
   public async updateProduct(productId: string, productData: UpdateProductDto): Promise<IProduct> {

@@ -9,6 +9,6 @@ export interface IProduct {
 
 export interface IGetAllProducts {
   page?: number;
-  categories?: number;
+  category?: number;
   name?: string;
 }

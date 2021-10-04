@@ -51,6 +51,9 @@ export default function (sequelize: Sequelize): typeof ProductModel {
       sequelize,
     },
   );
-
+  ProductModel.belongsTo(CategoryModel, { 
+    foreignKey: "categoryId", 
+    targetKey: "id"
+  });
   return ProductModel;
 }
