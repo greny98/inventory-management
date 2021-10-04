@@ -4,5 +4,5 @@ export interface IProductStockIn {
   stockInId: number;
   quantity: number;
   discount: number;
-  createdAt: Date;
+  createdAt?: Date;
 }

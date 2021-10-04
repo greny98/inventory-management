@@ -18,7 +18,7 @@ const { host, user, password, database, pool }: dbConfig = config.get('dbConfig'
 const sequelize = new Sequelize.Sequelize(database, user, password, {
   host: host,
   dialect: 'mysql',
-  timezone: '+09:00',
+  // timezone: '+09:00',
   define: {
     charset: 'utf8mb4',
     collate: 'utf8mb4_general_ci',
@@ -40,14 +40,14 @@ sequelize.authenticate();
 
 const DB = {
   Users: UserModel(sequelize),
+  Categories: CategoryModel(sequelize),
+  Customers: CustomerModel(sequelize),
+  Distributors: DistributorModel(sequelize),
   Products: ProductModel(sequelize),
   StockOut: StockOutModel(sequelize),
   ProductStockOut: ProductStockOutModel(sequelize),
   StockIn: StockInModel(sequelize),
   ProductStockIn: ProductStockInModel(sequelize),
-  Categories: CategoryModel(sequelize),
-  Customers: CustomerModel(sequelize),
-  Distributors: DistributorModel(sequelize),
   Inventories: InventoryModel(sequelize),
   ProductRank: ProductRankModel(sequelize),
   sequelize, // connection instance (RAW queries)

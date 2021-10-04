@@ -305,7 +305,23 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/stock_in'
+            type: object
+            properties:
+              distributor:
+                type: object
+                $ref: '#/definitions/distributor'
+              products:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    product:
+                      type: object
+                      $ref: '#/definitions/product'
+                    quantity:
+                      type: integer
+              discount:
+                type: number
       responses:
         201:
           description: Created

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { Routes } from '@interfaces/routes.interface';
 import StockInController from '@/controllers/stockIn.controller';
-import { CreateStockInDto } from '@/dtos/stockIn.dto';
+import { CreateStockInBodyDto } from '@/dtos/stockIn.dto';
 import validationMiddleware from '@/middlewares/validation.middleware';
 
 class StockInRoute implements Routes {
@@ -15,7 +15,7 @@ class StockInRoute implements Routes {
   private initializeRoutes() {
     this.router.post(
       `${this.path}`,
-      validationMiddleware(CreateStockInDto, 'body'),
+      validationMiddleware(CreateStockInBodyDto, 'body'),
       this.stockInController.createStockIn,
     );
   }

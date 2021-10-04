@@ -13,6 +13,10 @@ class DistributorService {
     return this.distributorModel.findAll({ limit, offset });
   }
 
+  // public async getById(id: number): Promise<IDistributor | null> {
+  //   return this.distributorModel.findByPk(id);
+  // }
+
   public searchDistributor(phone: string): Promise<IDistributor> {
     return this.distributorModel.findOne({ where: { phone } });
   }
