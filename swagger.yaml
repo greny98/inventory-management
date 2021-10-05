@@ -255,7 +255,7 @@ paths:
         - name: page
           type: integer
           in: query
-        
+
       responses:
         200:
           description: 'OK'
@@ -291,6 +291,7 @@ paths:
             $ref: '#/definitions/category'
   # =========================================[Stock In]=======================================================
   /stock_in:
+    # Get All
     get:
       tags:
         - stock_in
@@ -303,7 +304,16 @@ paths:
         200:
           description: 'List of stock in'
           schema:
-            $ref: '#/definitions/stock_in'
+            type: object
+            properties:
+              createdAt:
+                type: string
+                format: 'date-time'
+              distributor:
+                type: object
+                $ref: '#/definitions/distributor'
+              total:
+                type: number
     post:
       tags:
         - stock_in
@@ -314,6 +324,9 @@ paths:
           schema:
             type: object
             properties:
+              createdAt:
+                type: string
+                format: 'date-time'
               distributor:
                 type: object
                 $ref: '#/definitions/distributor'
@@ -334,6 +347,36 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/stock_in'
+  /stock_in/{stockInId}:
+    get:
+      summary: Get via stock_in_id (from product_stock_in)
+      parameters:
+        - in: path
+          type: integer
+          required: true
+          name: stockInId
+      responses:
+        200:
+          description: Stock In info
+          schema:
+            type: object
+            properties:
+              createdAt:
+                type: string
+                format: 'date-time'
+              distributor:
+                $ref: '#/definitions/distributor'
+              products:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    product:
+                      $ref: '#/definitions/product'
+                    quantity:
+                      type: integer
+              total:
+                type: number
   # =========================================[Stock out]=======================================================
   /stock_out:
     get:
@@ -447,17 +490,7 @@ definitions:
       distributor:
         type: object
         $ref: '#/definitions/distributor'
-      products:
-        type: array
-        items:
-          type: object
-          properties:
-            product:
-              type: object
-              $ref: '#/definitions/product'
-            quantity:
-              type: integer
-      discount:
+      totalPrice:
         type: number
   stock_out:
     type: object
