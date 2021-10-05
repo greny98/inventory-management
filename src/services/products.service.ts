@@ -4,6 +4,7 @@ import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
 import Sequelize from 'sequelize';
+import { CategoryModel } from '@models/categories.model';
 
 class ProductService {
   public products = DB.Products;
@@ -39,7 +40,8 @@ class ProductService {
       offset,
       where,
       include: {
-        model: DB.Categories,
+        model: CategoryModel,
+        as: 'category',
       },
     });
   }

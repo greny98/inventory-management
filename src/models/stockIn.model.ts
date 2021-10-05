@@ -16,14 +16,6 @@ export default function (sequelize: Sequelize): typeof StockInModel {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      distributorId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          key: 'id',
-          model: DistributorModel,
-        },
-      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -35,6 +27,6 @@ export default function (sequelize: Sequelize): typeof StockInModel {
       sequelize,
     },
   );
-
+  StockInModel.belongsTo(DistributorModel, { foreignKey: 'distributorId', as: 'distributor' });
   return StockInModel;
 }

@@ -23,6 +23,5 @@ export default function (sequelize: Sequelize): typeof CategoryModel {
       sequelize,
     },
   );
-  CategoryModel.hasMany(CategoryModel, { foreignKey: 'id', sourceKey: 'id' });
   return CategoryModel;
 }

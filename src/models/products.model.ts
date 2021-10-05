@@ -21,14 +21,6 @@ export default function (sequelize: Sequelize): typeof ProductModel {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      categoryId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          key: 'id',
-          model: CategoryModel,
-        },
-      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -51,9 +43,7 @@ export default function (sequelize: Sequelize): typeof ProductModel {
       sequelize,
     },
   );
-  ProductModel.belongsTo(CategoryModel, { 
-    foreignKey: "categoryId", 
-    targetKey: "id"
-  });
+  ProductModel.belongsTo(CategoryModel, { foreignKey: { name: 'categoryId' }, as: 'category' });
+  // CategoryModel
   return ProductModel;
 }

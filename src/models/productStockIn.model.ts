@@ -1,5 +1,7 @@
 import { IProductStockIn } from '@/interfaces/productStockIn.interfaces';
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import { ProductModel } from '@models/products.model';
+import { StockInModel } from '@models/stockIn.model';
 
 export class ProductStockInModel extends Model<IProductStockIn> implements IProductStockIn {
   id: number;
@@ -16,14 +18,6 @@ export default function (sequelize: Sequelize): typeof ProductStockInModel {
       id: {
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-      productId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-      },
-      stockInId: {
-        allowNull: false,
         type: DataTypes.INTEGER,
       },
       quantity: {
@@ -45,6 +39,8 @@ export default function (sequelize: Sequelize): typeof ProductStockInModel {
       sequelize,
     },
   );
-
+  ProductStockInModel.belongsTo(ProductModel, { foreignKey: 'productId', as: 'product' });
+  ProductStockInModel.belongsTo(StockInModel, { foreignKey: 'stockInId', as: 'stockIn' });
+  StockInModel.hasMany(ProductStockInModel);
   return ProductStockInModel;
 }

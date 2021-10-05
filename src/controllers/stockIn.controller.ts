@@ -5,11 +5,22 @@ import { RequestHandler } from 'express';
 import DistributorService from '@services/distributors.service';
 import { IProductStockIn } from '@interfaces/productStockIn.interfaces';
 import ProductStockInService from '@services/productStockIn.service';
+import { IGetAllProducts } from '@interfaces/products.interface';
 
 class StockInController {
   public stockInService = new StockInService();
   public distributorService = new DistributorService();
   public prodStockInService = new ProductStockInService();
+
+  public getAllStockIn: RequestHandler = async (req, res, next) => {
+    try {
+      const { page = 0 } = req.query as IGetAllProducts;
+      const stockIn = await this.prodStockInService.getAllProductStockIn(page);
+      res.status(201).json({ data: { stockIn } });
+    } catch (error) {
+      next(error);
+    }
+  };
 
   public createStockIn: RequestHandler = async (req, res, next) => {
     try {

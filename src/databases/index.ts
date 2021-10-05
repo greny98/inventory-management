@@ -1,18 +1,18 @@
 import config from 'config';
 import Sequelize from 'sequelize';
 import { dbConfig } from '@interfaces/db.interface';
-import UserModel from '@models/users.model';
-import ProductModel from '@models/products.model';
+import UserModelSeq from '@models/users.model';
+import ProductModelSeq, { ProductModel } from '@models/products.model';
 import { logger } from '@utils/logger';
-import StockOutModel from '@models/stockOut.model';
-import ProductStockOutModel from '@models/productStockOut.model';
-import StockInModel from '@models/stockIn.model';
-import ProductStockInModel from '@models/productStockIn.model';
-import CategoryModel from '@/models/categories.model';
-import CustomerModel from '@/models/customers.model';
-import DistributorModel from '@/models/distributors.model';
-import InventoryModel from '@/models/inventories.model';
-import ProductRankModel from '@/models/productRank.model';
+import StockOutModelSeq from '@models/stockOut.model';
+import ProductStockOutModelSeq from '@models/productStockOut.model';
+import StockInModelSeq from '@models/stockIn.model';
+import ProductStockInModelSeq from '@models/productStockIn.model';
+import CategoryModelSeq, { CategoryModel } from '@/models/categories.model';
+import CustomerModelSeq from '@/models/customers.model';
+import DistributorModelSeq from '@/models/distributors.model';
+import InventoryModelSeq from '@/models/inventories.model';
+import ProductRankModelSeq from '@/models/productRank.model';
 
 const { host, user, password, database, pool }: dbConfig = config.get('dbConfig');
 const sequelize = new Sequelize.Sequelize(database, user, password, {
@@ -39,17 +39,17 @@ const sequelize = new Sequelize.Sequelize(database, user, password, {
 sequelize.authenticate();
 
 const DB = {
-  Users: UserModel(sequelize),
-  Categories: CategoryModel(sequelize),
-  Customers: CustomerModel(sequelize),
-  Distributors: DistributorModel(sequelize),
-  Products: ProductModel(sequelize),
-  StockOut: StockOutModel(sequelize),
-  ProductStockOut: ProductStockOutModel(sequelize),
-  StockIn: StockInModel(sequelize),
-  ProductStockIn: ProductStockInModel(sequelize),
-  Inventories: InventoryModel(sequelize),
-  ProductRank: ProductRankModel(sequelize),
+  Users: UserModelSeq(sequelize),
+  Categories: CategoryModelSeq(sequelize),
+  Customers: CustomerModelSeq(sequelize),
+  Distributors: DistributorModelSeq(sequelize),
+  Products: ProductModelSeq(sequelize),
+  StockOut: StockOutModelSeq(sequelize),
+  ProductStockOut: ProductStockOutModelSeq(sequelize),
+  StockIn: StockInModelSeq(sequelize),
+  ProductStockIn: ProductStockInModelSeq(sequelize),
+  Inventories: InventoryModelSeq(sequelize),
+  ProductRank: ProductRankModelSeq(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };

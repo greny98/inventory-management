@@ -12,9 +12,6 @@ export class CreateProductDto {
 
   @IsNumber()
   public price: number;
-
-  @IsString()
-  public image?: string;
 }
 
 export class UpdateProductDto {
@@ -29,7 +26,4 @@ export class UpdateProductDto {
 
   @IsNumber()
   public price: number;
-
-  @IsString()
-  public image?: string;
 }
