@@ -53,8 +53,33 @@ class ProductService {
       throw new HttpException(400, "You're not Product");
     }
     await this.products.update({ ...productData }, { where: { id: productId } });
-    const updateProduct: IProduct = await this.products.findByPk(productId);
+    const updateProduct: IProduct = await this.products.findOne({
+      where: {
+        id: productId,
+      },
+      include: {
+        model: DB.Categories,
+      },
+    });
     return updateProduct;
+  }
+
+  public async getOneProduct(productId?: string): Promise<IProduct> {
+    if (isEmpty(productId)) {
+      throw new HttpException(400, "You're not Product");
+    }
+    const findProduct: IProduct = await this.products.findOne({
+      where: {
+        id: productId,
+      },
+      include: {
+        model: DB.Categories,
+      },
+    });
+    if (!findProduct) {
+      throw new HttpException(400, "You're not Product");
+    }
+    return findProduct;
   }
 }
 

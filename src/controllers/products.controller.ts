@@ -37,6 +37,16 @@ class ProductsController {
       next(error);
     }
   };
+
+  public getOneProduct: RequestHandler = async (req, res, next) => {
+    try {
+      const { productId } = req.params;
+      const product: IProduct = await this.productService.getOneProduct(productId);
+      res.status(201).json({ data: { product } });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default ProductsController;
