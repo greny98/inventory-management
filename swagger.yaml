@@ -191,7 +191,7 @@ paths:
         - in: query
           name: page
           type: integer
-        - name: categories
+        - name: category
           type: integer
           in: query
         - name: name
