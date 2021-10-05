@@ -391,7 +391,16 @@ paths:
         200:
           description: 'List of stock out'
           schema:
-            $ref: '#/definitions/stock_out'
+            type: object
+            properties:
+              createdAt:
+                type: string
+                format: 'date-time'
+              customer:
+                type: object
+                $ref: '#/definitions/customer'
+              total:
+                type: number
     post:
       tags:
         - stock_out
@@ -406,7 +415,38 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/stock_out'
-
+  /stock_out/{stockOutId}:
+    get:
+      summary: Get via stock_out_id (from product_stock_out)
+      parameters:
+        - in: path
+          type: integer
+          required: true
+          name: stockOutId
+      responses:
+        200:
+          description: Stock Out info
+          schema:
+            type: object
+            properties:
+              createdAt:
+                type: string
+                format: 'date-time'
+              customer:
+                $ref: '#/definitions/customer'
+              products:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    product:
+                      $ref: '#/definitions/product'
+                    quantity:
+                      type: integer
+              total:
+                type: number
+              discount:
+                type: number
 # definitions
 definitions:
   customer:
