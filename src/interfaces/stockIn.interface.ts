@@ -3,7 +3,7 @@ import { IProduct } from '@interfaces/products.interface';
 
 export interface IStockIn {
   id?: number;
-  distributorId: number;
+  distributorId?: number;
   createdAt: Date;
 }
 
@@ -15,4 +15,8 @@ export interface ICreateStockInBody {
     quantity: number;
   }[];
   discount?: number;
+}
+
+export interface IGetAllProductStockIn {
+  page?: number;
 }

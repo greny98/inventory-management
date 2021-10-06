@@ -3,7 +3,6 @@ import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
 import { CreateProductStockInDto } from '@dtos/productStockIn.dto';
 import { IProductStockIn } from '@interfaces/productStockIn.interfaces';
-import { ProductStockInModel } from '@models/productStockIn.model';
 import { ProductModel } from '@models/products.model';
 import { StockInModel } from '@models/stockIn.model';
 

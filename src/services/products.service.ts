@@ -60,7 +60,7 @@ class ProductService {
         id: productId,
       },
       include: {
-        model: DB.Categories,
+        model: CategoryModel,
       },
     });
     return updateProduct;
@@ -75,7 +75,7 @@ class ProductService {
         id: productId,
       },
       include: {
-        model: DB.Categories,
+        model: CategoryModel,
       },
     });
     if (!findProduct) {
