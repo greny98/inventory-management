@@ -5,9 +5,9 @@ import { StockInModel } from '@models/stockIn.model';
 
 export class ProductStockInModel extends Model<IProductStockIn> implements IProductStockIn {
   id: number;
+  quantity: number;
   productId: number;
   stockInId: number;
-  quantity: number;
   discount: number;
   createdAt: Date;
 }
@@ -41,6 +41,6 @@ export default function (sequelize: Sequelize): typeof ProductStockInModel {
   );
   ProductStockInModel.belongsTo(ProductModel, { foreignKey: 'productId', as: 'product' });
   ProductStockInModel.belongsTo(StockInModel, { foreignKey: 'stockInId', as: 'stockIn' });
-  StockInModel.hasMany(ProductStockInModel);
+  StockInModel.hasMany(ProductStockInModel, { foreignKey: 'stockInId', as: 'productStockIn' });
   return ProductStockInModel;
 }
