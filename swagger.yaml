@@ -349,6 +349,8 @@ paths:
             $ref: '#/definitions/stock_in'
   /stock_in/{stockInId}:
     get:
+      tags:
+        - stock_in
       summary: Get via stock_in_id (from product_stock_in)
       parameters:
         - in: path
@@ -417,6 +419,8 @@ paths:
             $ref: '#/definitions/stock_out'
   /stock_out/{stockOutId}:
     get:
+      tags:
+        - stock_out
       summary: Get via stock_out_id (from product_stock_out)
       parameters:
         - in: path
