@@ -17,14 +17,14 @@ export default function (sequelize: Sequelize): typeof InventoryModel {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      productId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          key: 'id',
-          model: ProductModel,
-        },
-      },
+      // productId: {
+      //   allowNull: false,
+      //   type: DataTypes.INTEGER,
+      //   references: {
+      //     key: 'id',
+      //     model: ProductModel,
+      //   },
+      // },
       quantity: {
         allowNull: false,
         type: DataTypes.INTEGER,
