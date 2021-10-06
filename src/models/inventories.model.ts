@@ -34,6 +34,6 @@ export default function (sequelize: Sequelize): typeof InventoryModel {
       sequelize,
     },
   );
-
+  InventoryModel.belongsTo(ProductModel, { foreignKey: { name: 'productId' }, as: 'product' });
   return InventoryModel;
 }
