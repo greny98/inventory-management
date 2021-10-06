@@ -1,12 +1,10 @@
 import { IInventory } from '@/interfaces/inventories.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { ProductModel } from '@models/products.model';
 
 export class InventoryModel extends Model<IInventory> implements IInventory {
   id: number;
   productId: number;
   quantity: number;
-  lastUpdatedAt: Date;
 }
 
 export default function (sequelize: Sequelize): typeof InventoryModel {
@@ -17,23 +15,19 @@ export default function (sequelize: Sequelize): typeof InventoryModel {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      // productId: {
-      //   allowNull: false,
-      //   type: DataTypes.INTEGER,
-      //   references: {
-      //     key: 'id',
-      //     model: ProductModel,
-      //   },
-      // },
+      productId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       quantity: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      lastUpdatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: new Date(),
-      },
+      // lastUpdatedAt: {
+      //   allowNull: false,
+      //   type: DataTypes.DATE,
+      //   defaultValue: new Date(),
+      // },
     },
     {
       tableName: 'inventories',

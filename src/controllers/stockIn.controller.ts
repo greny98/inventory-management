@@ -6,12 +6,13 @@ import DistributorService from '@services/distributors.service';
 import { IProductStockIn } from '@interfaces/productStockIn.interfaces';
 import ProductStockInService from '@services/productStockIn.service';
 import { IGetAllProducts } from '@interfaces/products.interface';
-import { ProductStockInModel } from '@/models/productStockIn.model';
+import InventoriesService from '@/services/inventories.service';
 
 class StockInController {
   public stockInService = new StockInService();
   public distributorService = new DistributorService();
   public prodStockInService = new ProductStockInService();
+  public inventoryService = new InventoriesService();
 
   public getAllProductStockIn: RequestHandler = async (req, res, next) => {
     try {
@@ -51,15 +52,26 @@ class StockInController {
       });
       // Create product stock in
       const prodStockIns: IProductStockIn[] = products.map(prod => ({
-        stockInId: createStockInData.id,
         createdAt: new Date(),
         discount,
         productId: prod.product.id,
         quantity: prod.quantity,
       }));
       const result = await this.prodStockInService.prodStockIn.bulkCreate(prodStockIns);
-      // TODO: Update inventory
-      console.log(result);
+      // Create or Update Inventory
+      const productFilter = result.map(prod => ({ productId: prod.productId, quantity: prod.quantity }));
+      const allProductCreated = await Promise.all(
+        productFilter.map(prod => this.inventoryService.searchProductInInventory(prod.productId)),
+      );
+      await Promise.all(
+        allProductCreated.map((isProductExist, index) => {
+          if (Boolean(isProductExist)) {
+            return this.inventoryService.updateInventory(productFilter[index]);
+          }
+          return this.inventoryService.createInventory(productFilter[index]);
+        }),
+      );
+
       await res.status(201).json({ data: createStockInData, message: 'created' });
     } catch (error) {
       next(error);

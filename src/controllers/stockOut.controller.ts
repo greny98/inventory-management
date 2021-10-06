@@ -2,6 +2,7 @@ import { CreateStockOutBodyDto } from '@/dtos/stockOut.dto';
 import { IProductStockOut } from '@/interfaces/productStockOut.interface';
 import { IGetAllStockOut, IStockOut } from '@/interfaces/stockOut.interface';
 import CustomerService from '@/services/customers.service';
+import InventoriesService from '@/services/inventories.service';
 import ProductStockOutService from '@/services/productStockOut.service';
 import StockOutService from '@/services/stockOut.service';
 import { RequestHandler } from 'express';
@@ -10,6 +11,7 @@ class StockOutController {
   public stockOutService = new StockOutService();
   public customerService = new CustomerService();
   public prodStockOutService = new ProductStockOutService();
+  public inventoryService = new InventoriesService();
 
   public createStockOut: RequestHandler = async (req, res, next) => {
     try {
@@ -36,9 +38,14 @@ class StockOutController {
         createdAt: new Date(),
       }));
       const result = await this.prodStockOutService.prodStockOut.bulkCreate(productStockOut);
-      // TODO: Update inventory
-      // console.log(result);
-      await res.status(201).json({ data: createStockOutData, message: 'created' });
+      // Update Inventory with subtracting quantity
+      await Promise.all(
+        result.map(prod =>
+          this.inventoryService.updateInventory({ productId: prod.productId, quantity: -prod.quantity }),
+        ),
+      );
+
+      await res.status(201).json({ data: createStockOutData, message: 'created stock out' });
     } catch (error) {
       next(error);
     }

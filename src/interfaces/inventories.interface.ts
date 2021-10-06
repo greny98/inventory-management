@@ -1,8 +1,8 @@
 export interface IInventory {
-  id: number;
+  id?: number;
   productId?: number;
   quantity: number;
-  lastUpdatedAt: Date;
+  // lastUpdatedAt: Date;
 }
 
 export interface IGetAllInventories {
