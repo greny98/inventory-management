@@ -28,7 +28,7 @@ class InventoriesService {
       offset,
       include: {
         model: ProductModel,
-        as: 'Product',
+        as: 'product',
         where: whereProduct,
         include: [
           {

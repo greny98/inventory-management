@@ -1,5 +1,6 @@
 import { IInventory } from '@/interfaces/inventories.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import { ProductModel } from './products.model';
 
 export class InventoryModel extends Model<IInventory> implements IInventory {
   id: number;
@@ -13,10 +14,6 @@ export default function (sequelize: Sequelize): typeof InventoryModel {
       id: {
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-      productId: {
-        allowNull: false,
         type: DataTypes.INTEGER,
       },
       quantity: {
