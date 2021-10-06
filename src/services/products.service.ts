@@ -26,22 +26,24 @@ class ProductService {
   public async getAllProducts(page: number, category?: number, name?: string): Promise<IProduct[]> {
     const limit = 10;
     const offset = page * limit;
-    const where = {};
+    const whereProduct = {};
+    const whereCategory = {};
     if (category) {
-      where['categoryId'] = category;
+      whereCategory['id'] = category;
     }
     if (name) {
-      where['name'] = {
+      whereProduct['name'] = {
         [Sequelize.Op.like]: `%${name}%`,
       };
     }
     return this.products.findAll({
       limit,
       offset,
-      where,
+      where: whereProduct,
       include: {
         model: CategoryModel,
         as: 'category',
+        where: whereCategory,
       },
     });
   }
@@ -60,7 +62,8 @@ class ProductService {
         id: productId,
       },
       include: {
-        model: CategoryModel,
+        model: DB.Categories,
+        as: 'category',
       },
     });
     return updateProduct;
@@ -75,7 +78,8 @@ class ProductService {
         id: productId,
       },
       include: {
-        model: CategoryModel,
+        model: DB.Categories,
+        as: 'category',
       },
     });
     if (!findProduct) {
