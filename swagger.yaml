@@ -20,6 +20,7 @@ tags:
   - name: inventories
   - name: stock_in
   - name: stock_out
+  - name: product_rank
 
 paths:
   # =========================================[Customers]=======================================================
@@ -451,6 +452,51 @@ paths:
                 type: number
               discount:
                 type: number
+  # =========================================[Product Rank]=======================================================
+  /product_rank:
+    # GET
+    get:
+      tags:
+        - product_rank
+      summary: list all product_rank
+      parameters:
+        - name: page
+          type: integer
+          in: query
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  productRank:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/definitions/product_rank'
+    # POST
+    post:
+      tags:
+        - product_rank
+      summary: create product_rank
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              productId:
+                type: integer
+              month:
+                type: integer
+              year:
+                type: integer
+              quantity:
+                type: integer
+
 # definitions
 definitions:
   customer:
@@ -555,6 +601,17 @@ definitions:
               type: integer
       discount:
         type: number
+  product_rank:
+    type: object
+    properties:
+      productId:
+        type: integer
+      month:
+        type: integer
+      year:
+        type: integer
+      quantity:
+        type: integer
 
 schemes:
   - https

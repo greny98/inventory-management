@@ -3,15 +3,18 @@ import { IProductStockOut } from '@/interfaces/productStockOut.interface';
 import { IGetAllStockOut, IStockOut } from '@/interfaces/stockOut.interface';
 import CustomerService from '@/services/customers.service';
 import InventoriesService from '@/services/inventories.service';
+import ProductRankService from '@/services/productRank.service';
 import ProductStockOutService from '@/services/productStockOut.service';
 import StockOutService from '@/services/stockOut.service';
 import { RequestHandler } from 'express';
+import moment from 'moment';
 
 class StockOutController {
   public stockOutService = new StockOutService();
   public customerService = new CustomerService();
   public prodStockOutService = new ProductStockOutService();
   public inventoryService = new InventoriesService();
+  public productRankService = new ProductRankService();
 
   public createStockOut: RequestHandler = async (req, res, next) => {
     try {
@@ -37,7 +40,11 @@ class StockOutController {
         quantity: prod.quantity,
         createdAt: new Date(),
       }));
+      const month = moment(new Date()).format('M');
+      const year = moment(new Date()).format('Y');
+
       const result = await this.prodStockOutService.prodStockOut.bulkCreate(productStockOut);
+
       // Update Inventory with subtracting quantity
       await Promise.all(
         result.map(prod =>
@@ -45,6 +52,17 @@ class StockOutController {
         ),
       );
 
+      // Create Product Rank
+      await Promise.all(
+        result.map(prod =>
+          this.productRankService.createOrUpdateProductRank({
+            productId: prod.productId,
+            quantity: prod.quantity,
+            month: Number(month),
+            year: Number(year),
+          }),
+        ),
+      );
       await res.status(201).json({ data: createStockOutData, message: 'created stock out' });
     } catch (error) {
       next(error);

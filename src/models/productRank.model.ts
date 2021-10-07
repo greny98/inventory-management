@@ -5,8 +5,8 @@ import { ProductModel } from '@models/products.model';
 export class ProductRankModel extends Model<IProductRank> implements IProductRank {
   id: number;
   productId: number;
-  month: Date;
-  year: Date;
+  month: number;
+  year: number;
   quantity: number;
 }
 
@@ -18,21 +18,13 @@ export default function (sequelize: Sequelize): typeof ProductRankModel {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      productId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          key: 'id',
-          model: ProductModel,
-        },
-      },
       month: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
       },
       year: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
       },
       quantity: {
         allowNull: false,
@@ -44,6 +36,8 @@ export default function (sequelize: Sequelize): typeof ProductRankModel {
       sequelize,
     },
   );
+
+  ProductRankModel.belongsTo(ProductModel, { foreignKey: 'productId', as: 'product' });
 
   return ProductRankModel;
 }

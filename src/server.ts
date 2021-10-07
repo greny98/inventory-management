@@ -13,6 +13,7 @@ import InventoriesRoute from './routes/inventories.route';
 import StockInRoute from './routes/stockIn.route';
 import DistributorsRoute from './routes/distributors.route';
 import StockOutRoute from './routes/stockOut.route';
+import ProductRankRoute from './routes/productRank.route';
 
 validateEnv();
 
@@ -28,6 +29,7 @@ const app = new App([
   new StockOutRoute(),
   new DistributorsRoute(),
   new ProductRoute(),
+  new ProductRankRoute(),
 ]);
 
 app.listen();
