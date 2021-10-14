@@ -20,8 +20,28 @@ class CategoryController {
   public getAllCategories: RequestHandler = async (req, res, next) => {
     try {
       const { page = 0 } = req.query as IGetAllCategories;
-      const categories: ICategories[] = await this.categoryService.getAllCategories(page);
-      res.status(201).json({ data: { categories } });
+      const categories: any[] = await this.categoryService.getAllCategories(page);
+      const categoryCount: any = await this.categoryService.getCountAllCategories();
+
+      // Convert Array category to Object Category with key = categoryId
+      const objectCategoryCount = categoryCount.reduce(
+        (obj, item) => ({
+          ...obj,
+          [item['categoryId']]: item.dataValues,
+        }),
+        {},
+      );
+      // add attribute count for List object category
+      const categoriesWithCounting = categories.map(category => {
+        return {
+          ...category.dataValues,
+          count: objectCategoryCount[`${category.dataValues.id}`]
+            ? objectCategoryCount[`${category.dataValues.id}`].categoryCount
+            : 0,
+        };
+      });
+
+      res.status(201).json({ data: { categories: categoriesWithCounting } });
     } catch (error) {
       next(error);
     }

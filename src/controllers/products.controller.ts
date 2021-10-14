@@ -20,8 +20,12 @@ class ProductsController {
   public getAllProduct: RequestHandler = async (req, res, next) => {
     try {
       const { page = 0, category, name } = req.query as IGetAllProducts;
-      const products: IProduct[] = await this.productService.getAllProducts(page, category, name);
-      res.status(201).json({ data: { products } });
+      const products: { rows: IProduct[]; count: number } = await this.productService.getAllProducts(
+        page,
+        category,
+        name,
+      );
+      res.status(201).json({ data: { count: products.count, products: products.rows } });
     } catch (error) {
       next(error);
     }

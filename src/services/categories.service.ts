@@ -3,9 +3,11 @@ import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
 import { CreateCategoryDto } from '@/dtos/categories.dto';
 import { ICategories } from '@/interfaces/categories.interface';
+import sequelize from 'sequelize';
 
 class CategoryService {
   public categories = DB.Categories;
+  public products = DB.Products;
 
   public async createCategory(categoryData: CreateCategoryDto): Promise<ICategories> {
     // Check empty
@@ -25,6 +27,13 @@ class CategoryService {
     const limit = 10;
     const offset = page * limit;
     return this.categories.findAll({ limit, offset });
+  }
+
+  public async getCountAllCategories(): Promise<any> {
+    return this.products.findAll({
+      group: ['categoryId'],
+      attributes: ['categoryId', [sequelize.fn('COUNT', 'categoryId'), 'categoryCount']],
+    });
   }
 
   public searchCategory(name: string): Promise<ICategories> {

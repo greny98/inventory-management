@@ -23,7 +23,11 @@ class ProductService {
     return this.products.create({ ...productData });
   }
 
-  public async getAllProducts(page: number, category?: number, name?: string): Promise<IProduct[]> {
+  public async getAllProducts(
+    page: number,
+    category?: number,
+    name?: string,
+  ): Promise<{ rows: IProduct[]; count: number }> {
     const limit = 10;
     const offset = page * limit;
     const whereProduct = {};
@@ -36,7 +40,7 @@ class ProductService {
         [Sequelize.Op.like]: `%${name}%`,
       };
     }
-    return this.products.findAll({
+    return this.products.findAndCountAll({
       limit,
       offset,
       where: whereProduct,
