@@ -28,7 +28,7 @@ class StockInController {
     try {
       const { page = 0 } = req.query as IGetAllProducts;
       const stockIn = await this.stockInService.getAllStockIn(page);
-      res.status(201).json({ data: { stockIn } });
+      res.status(201).json({ data: { count: stockIn.count, stockIn: stockIn.rows } });
     } catch (error) {
       next(error);
     }
@@ -52,6 +52,7 @@ class StockInController {
       });
       // Create product stock in
       const prodStockIns: IProductStockIn[] = products.map(prod => ({
+        stockInId: createStockInData.id,
         createdAt: new Date(),
         discount,
         productId: prod.product.id,

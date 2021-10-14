@@ -6,6 +6,7 @@ import { ProductStockOutModel } from '@/models/productStockOut.model';
 import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
+import Sequelize from 'sequelize';
 
 class StockOutService {
   public stockOut = DB.StockOut;
@@ -17,12 +18,23 @@ class StockOutService {
     return this.stockOut.create({ ...stockOutData });
   }
 
-  public async getAllStockOut(page: number): Promise<IStockOut[]> {
+  public async getAllStockOut(page: number, queryToday?: boolean) {
     const limit = 10;
     const offset = page * limit;
-    return this.stockOut.findAll({
+    const whereDate = {};
+    if (queryToday) {
+      const TODAY_START = new Date().setHours(0, 0, 0, 0);
+      const NOW = new Date();
+      whereDate['createdAt'] = {
+        [Sequelize.Op.gt]: TODAY_START,
+        [Sequelize.Op.lt]: NOW,
+      };
+    }
+
+    return this.stockOut.findAndCountAll({
       limit,
       offset,
+      where: whereDate,
       include: [
         {
           model: CustomerModel,

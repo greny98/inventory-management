@@ -4,12 +4,12 @@ import { ProductModel } from './products.model';
 import { StockOutModel } from './stockOut.model';
 
 export class ProductStockOutModel extends Model<IProductStockOut> implements IProductStockOut {
-  createdAt: Date;
-  discount: number;
   id: number;
-  productId: number;
   quantity: number;
+  productId: number;
   stockOutId: number;
+  discount: number;
+  createdAt: Date;
 }
 
 export default function (sequelize: Sequelize): typeof ProductStockOutModel {

@@ -6,23 +6,39 @@ import { isEmpty } from '@utils/util';
 import { DistributorModel } from '@/models/distributors.model';
 import { ProductStockInModel } from '@/models/productStockIn.model';
 import { ProductModel } from '@/models/products.model';
+import Sequelize from 'sequelize';
 
 class StockInService {
   public stockIn = DB.StockIn;
 
-  public async getAllStockIn(page: number) {
+  public async getAllStockIn(page: number, queryToday?: boolean) {
     const limit = 10;
     const offset = page * limit;
-    return this.stockIn.findAll({
+    const whereDate = {};
+    if (queryToday) {
+      const TODAY_START = new Date().setHours(0, 0, 0, 0);
+      const NOW = new Date();
+      whereDate['createdAt'] = {
+        [Sequelize.Op.gt]: TODAY_START,
+        [Sequelize.Op.lt]: NOW,
+      };
+    }
+    return this.stockIn.findAndCountAll({
       limit,
       offset,
+      where: whereDate,
       include: [
-        { model: DistributorModel, as: 'distributor' },
+        {
+          model: DistributorModel,
+          as: 'distributor',
+        },
         {
           model: ProductStockInModel,
           as: 'productStockIn',
-          nested: true,
-          include: { model: ProductModel, as: 'product' } as any,
+          include: {
+            model: ProductModel,
+            as: 'product',
+          } as any,
         },
       ],
     });

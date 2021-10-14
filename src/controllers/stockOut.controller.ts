@@ -73,7 +73,7 @@ class StockOutController {
     try {
       const { page = 0 } = req.query as IGetAllStockOut;
       const stockOut = await this.stockOutService.getAllStockOut(page);
-      await res.status(201).json({ data: { stockOut }, message: 'listed all' });
+      await res.status(201).json({ data: { count: stockOut.count, stockOut: stockOut.rows }, message: 'listed all' });
     } catch (error) {
       next(error);
     }
