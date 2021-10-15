@@ -7,6 +7,7 @@ import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
 import Sequelize from 'sequelize';
+import moment from 'moment';
 
 class StockOutService {
   public stockOut = DB.StockOut;
@@ -61,9 +62,7 @@ class StockOutService {
       where['customerId'] = customerId;
     }
 
-    console.log('=========== where', where);
-
-    return this.stockOut.findAndCountAll({
+    return this.stockOut.findAll({
       where,
       include: [
         {
@@ -80,6 +79,19 @@ class StockOutService {
         },
       ],
     });
+  }
+
+  public async calcRevenue(month: number, year: number) {
+    const fromDate: Date = new Date(`${year}-${month}-01T00:00:00.000Z`);
+    const toDate: Date = moment(fromDate).endOf('month').toDate();
+    const stockOut = await this.filterDate(fromDate, toDate);
+    let revenue = 0;
+    (stockOut as any).forEach(s => {
+      (s as any).dataValues.productStockOut.forEach(ps => {
+        revenue += ps.product.price * ps.quantity;
+      });
+    });
+    return revenue;
   }
 }
 

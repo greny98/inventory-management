@@ -14,6 +14,7 @@ import StockInRoute from './routes/stockIn.route';
 import DistributorsRoute from './routes/distributors.route';
 import StockOutRoute from './routes/stockOut.route';
 import ProductRankRoute from './routes/productRank.route';
+import StatsRoute from '@routes/stats.route';
 
 validateEnv();
 
@@ -30,6 +31,7 @@ const app = new App([
   new DistributorsRoute(),
   new ProductRoute(),
   new ProductRankRoute(),
+  new StatsRoute(),
 ]);
 
 app.listen();

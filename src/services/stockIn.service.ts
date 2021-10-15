@@ -7,6 +7,7 @@ import { DistributorModel } from '@/models/distributors.model';
 import { ProductStockInModel } from '@/models/productStockIn.model';
 import { ProductModel } from '@/models/products.model';
 import Sequelize from 'sequelize';
+import moment from 'moment';
 
 class StockInService {
   public stockIn = DB.StockIn;
@@ -63,7 +64,7 @@ class StockInService {
       where['distributorId'] = distributorId;
     }
 
-    return this.stockIn.findAndCountAll({
+    return this.stockIn.findAll({
       where,
       include: [
         {
@@ -80,6 +81,19 @@ class StockInService {
         },
       ],
     });
+  }
+
+  public async calcCost(month: number, year: number) {
+    const fromDate: Date = new Date(`${year}-${month}-01T00:00:00.000Z`);
+    const toDate: Date = moment(fromDate).endOf('month').toDate();
+    const stockIn = await this.filterDate(fromDate, toDate);
+    let cost = 0;
+    (stockIn as any).forEach(s => {
+      (s as any).dataValues.productStockIn.forEach(ps => {
+        cost += ps.product.price * ps.quantity;
+      });
+    });
+    return cost;
   }
 }
 
