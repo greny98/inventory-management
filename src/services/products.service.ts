@@ -5,6 +5,7 @@ import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
 import Sequelize from 'sequelize';
 import { CategoryModel } from '@models/categories.model';
+import { InventoryModel } from '@models/inventories.model';
 
 class ProductService {
   public products = DB.Products;
@@ -44,11 +45,17 @@ class ProductService {
       limit,
       offset,
       where: whereProduct,
-      include: {
-        model: CategoryModel,
-        as: 'category',
-        where: whereCategory,
-      },
+      include: [
+        {
+          model: CategoryModel,
+          as: 'category',
+          where: whereCategory,
+        },
+        // {
+        //   model: InventoryModel,
+        //   as: 'inventory',
+        // },
+      ],
     });
   }
 
