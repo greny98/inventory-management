@@ -7,6 +7,10 @@ import { IProductStockIn } from '@interfaces/productStockIn.interfaces';
 import ProductStockInService from '@services/productStockIn.service';
 import { IGetAllProducts } from '@interfaces/products.interface';
 import InventoriesService from '@/services/inventories.service';
+import { IDistributor } from '@interfaces/distributors.interface';
+import moment from 'moment';
+
+type FilterQuery = { fromDate: Date; toDate: Date; distributorPhone: string };
 
 class StockInController {
   public stockInService = new StockInService();
@@ -76,6 +80,24 @@ class StockInController {
       await res.status(201).json({ data: createStockInData, message: 'created' });
     } catch (error) {
       next(error);
+    }
+  };
+
+  public filter: RequestHandler<any, any, FilterQuery, any> = async (req, res, next) => {
+    try {
+      const { fromDate, toDate, distributorPhone } = req.query;
+      let distributor: IDistributor = null;
+      if (distributorPhone) {
+        distributor = await this.distributorService.searchDistributor(distributorPhone);
+      }
+      const stockIn = await this.stockInService.filterDate(
+        moment(fromDate).toDate(),
+        moment(toDate).toDate(),
+        distributor?.id,
+      );
+      res.json({ data: stockIn });
+    } catch (e) {
+      next(e);
     }
   };
 }

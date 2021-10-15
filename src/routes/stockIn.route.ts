@@ -13,8 +13,10 @@ class StockInRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.stockInController.getAllStockIn);
     this.router.get(`${this.path}/all-product`, this.stockInController.getAllProductStockIn);
+    this.router.get(`${this.path}/filter`, this.stockInController.filter);
+    this.router.get(`${this.path}`, this.stockInController.getAllStockIn);
+
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateStockInBodyDto, 'body'),

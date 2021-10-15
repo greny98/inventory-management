@@ -52,6 +52,35 @@ class StockInService {
     // create new category
     return this.stockIn.create({ ...stockInData });
   }
+
+  public async filterDate(fromDate: Date, toDate: Date, distributorId?: number) {
+    const where = {
+      createdAt: {
+        [Sequelize.Op.between]: [fromDate, toDate],
+      },
+    };
+    if (distributorId != null) {
+      where['distributorId'] = distributorId;
+    }
+
+    return this.stockIn.findAndCountAll({
+      where,
+      include: [
+        {
+          model: DistributorModel,
+          as: 'distributor',
+        },
+        {
+          model: ProductStockInModel,
+          as: 'productStockIn',
+          include: {
+            model: ProductModel,
+            as: 'product',
+          } as any,
+        },
+      ],
+    });
+  }
 }
 
 export default StockInService;

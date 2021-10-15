@@ -51,6 +51,36 @@ class StockOutService {
       ],
     });
   }
+  public async filterDate(fromDate: Date, toDate: Date, customerId?: number) {
+    const where = {
+      createdAt: {
+        [Sequelize.Op.between]: [fromDate, toDate],
+      },
+    };
+    if (customerId != null) {
+      where['customerId'] = customerId;
+    }
+
+    console.log('=========== where', where);
+
+    return this.stockOut.findAndCountAll({
+      where,
+      include: [
+        {
+          model: CustomerModel,
+          as: 'customer',
+        },
+        {
+          model: ProductStockOutModel,
+          as: 'productStockOut',
+          include: {
+            model: ProductModel,
+            as: 'product',
+          } as any,
+        },
+      ],
+    });
+  }
 }
 
 export default StockOutService;

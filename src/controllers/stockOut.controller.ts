@@ -8,6 +8,10 @@ import ProductStockOutService from '@/services/productStockOut.service';
 import StockOutService from '@/services/stockOut.service';
 import { RequestHandler } from 'express';
 import moment from 'moment';
+import { IDistributor } from '@interfaces/distributors.interface';
+import { ICustomer } from '@interfaces/customers.interface';
+
+type FilterQuery = { fromDate: Date; toDate: Date; customerPhone: string };
 
 class StockOutController {
   public stockOutService = new StockOutService();
@@ -76,6 +80,24 @@ class StockOutController {
       await res.status(201).json({ data: { count: stockOut.count, stockOut: stockOut.rows }, message: 'listed all' });
     } catch (error) {
       next(error);
+    }
+  };
+
+  public filter: RequestHandler<any, any, FilterQuery, any> = async (req, res, next) => {
+    try {
+      const { fromDate, toDate, customerPhone } = req.query as FilterQuery;
+      let customer: ICustomer = null;
+      if (customerPhone) {
+        customer = await this.customerService.searchCustomer(customerPhone);
+      }
+      const stockIn = await this.stockOutService.filterDate(
+        moment(fromDate).toDate(),
+        moment(toDate).toDate(),
+        customer?.id,
+      );
+      res.json({ data: stockIn });
+    } catch (e) {
+      next(e);
     }
   };
 }

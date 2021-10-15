@@ -15,6 +15,7 @@ class StockOutRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.stockOutController.getAllStockOut);
+    this.router.get(`${this.path}/filter`, this.stockOutController.filter);
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateStockOutBodyDto, 'body'),
