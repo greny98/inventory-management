@@ -49,9 +49,28 @@ class CategoryController {
 
   public searchCategory: RequestHandler = async (req, res, next) => {
     try {
-      const categoryQuery: SearchCategoryDto = req.body;
-      const category: ICategories = await this.categoryService.searchCategory(categoryQuery.name);
-      res.json({ data: { category } });
+      const categoryQuery: SearchCategoryDto = req.query as any;
+      const categories: any = await this.categoryService.searchCategory(categoryQuery.name);
+      const categoryCount: any = await this.categoryService.getCountAllCategories();
+
+      // Convert Array category to Object Category with key = categoryId
+      const objectCategoryCount = categoryCount.reduce(
+        (obj, item) => ({
+          ...obj,
+          [item['categoryId']]: item.dataValues,
+        }),
+        {},
+      );
+      // add attribute count for List object category
+      const categoriesWithCounting = categories.map(category => {
+        return {
+          ...category.dataValues,
+          count: objectCategoryCount[`${category.dataValues.id}`]
+            ? objectCategoryCount[`${category.dataValues.id}`].categoryCount
+            : 0,
+        };
+      });
+      res.status(201).json({ data: { category: categoriesWithCounting } });
     } catch (error) {
       next(error);
     }

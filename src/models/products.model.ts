@@ -44,7 +44,7 @@ export default function (sequelize: Sequelize): typeof ProductModel {
       sequelize,
     },
   );
-  ProductModel.belongsTo(CategoryModel, { foreignKey: { name: 'category_id' }, as: 'category' });
+  ProductModel.belongsTo(CategoryModel, { foreignKey: { name: 'categoryId' }, as: 'category' });
   // CategoryModel
   // ProductModel.hasOne(InventoryModel, { foreignKey: { name: 'product_id' }, as: 'inventory' });
   return ProductModel;

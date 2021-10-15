@@ -2,7 +2,7 @@ import { IsString, IsNumber } from 'class-validator';
 
 export class CreateProductDto {
   @IsNumber()
-  public category_id: number;
+  public categoryId: number;
 
   @IsString()
   public name: string;

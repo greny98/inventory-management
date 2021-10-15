@@ -36,8 +36,9 @@ class CategoryService {
     });
   }
 
-  public searchCategory(name: string): Promise<ICategories> {
-    return this.categories.findOne({ where: { name } });
+  public searchCategory(nameCate: string): Promise<ICategories[]> {
+    console.log('[ane', nameCate);
+    return this.categories.findAll({ where: { name: { [sequelize.Op.like]: `%${nameCate}%` } } });
   }
 
   public async updateCategory(categoryId: number, categoryData: CreateCategoryDto): Promise<ICategories> {

@@ -9,3 +9,4 @@ export class SearchCategoryDto {
   @IsString()
   public name: string;
 }
+
