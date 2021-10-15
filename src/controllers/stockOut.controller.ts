@@ -8,7 +8,6 @@ import ProductStockOutService from '@/services/productStockOut.service';
 import StockOutService from '@/services/stockOut.service';
 import { RequestHandler } from 'express';
 import moment from 'moment';
-import { IDistributor } from '@interfaces/distributors.interface';
 import { ICustomer } from '@interfaces/customers.interface';
 
 type FilterQuery = { fromDate: Date; toDate: Date; customerPhone: string };

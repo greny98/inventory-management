@@ -12,22 +12,13 @@ import moment from 'moment';
 class StockInService {
   public stockIn = DB.StockIn;
 
-  public async getAllStockIn(page: number, queryToday?: boolean) {
+  public async getAllStockIn(page: number) {
     const limit = 10;
     const offset = page * limit;
-    const whereDate = {};
-    if (queryToday) {
-      const TODAY_START = new Date().setHours(0, 0, 0, 0);
-      const NOW = new Date();
-      whereDate['createdAt'] = {
-        [Sequelize.Op.gt]: TODAY_START,
-        [Sequelize.Op.lt]: NOW,
-      };
-    }
+
     return this.stockIn.findAndCountAll({
       limit,
       offset,
-      where: whereDate,
       include: [
         {
           model: DistributorModel,

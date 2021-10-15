@@ -40,6 +40,28 @@ class InventoriesService {
       },
     });
   }
+  public async searchInventory(searchField?: string): Promise<any> {
+    const whereSearch = {};
+    if (searchField) {
+      whereSearch['name'] = {
+        [Sequelize.Op.like]: `%${searchField}%`,
+      };
+    }
+
+    return this.inventories.findAll({
+      include: {
+        model: ProductModel,
+        as: 'product',
+        where: whereSearch,
+        include: [
+          {
+            model: CategoryModel,
+            as: 'category',
+          },
+        ],
+      },
+    });
+  }
 
   public async createInventory(inventoryData: CreateInventoryDto): Promise<IInventory> {
     // check empty

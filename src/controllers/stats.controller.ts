@@ -12,7 +12,6 @@ class StatsController {
     try {
       const revenue = await this.stockOutService.calcRevenue(Number(month), Number(year));
       const cost = await this.stockInService.calcCost(Number(month), Number(year));
-      console.log('============', revenue, cost);
       res.json({
         data: {
           revenue,

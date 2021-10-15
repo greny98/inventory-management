@@ -13,6 +13,7 @@ class InventoriesRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.inventoriesController.getAllInventories);
+    this.router.get(`${this.path}/search`, this.inventoriesController.searchInventory);
   }
 }
 

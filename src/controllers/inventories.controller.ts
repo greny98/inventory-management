@@ -14,6 +14,16 @@ class InventoriesController {
       next(error);
     }
   };
+
+  public searchInventory: RequestHandler = async (req, res, next) => {
+    try {
+      const { searchField } = req.query as any;
+      const inventories: IInventory[] = await this.inventoriesService.searchInventory(searchField);
+      res.status(201).json({ data: { inventories }, message: 'listed' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default InventoriesController;
