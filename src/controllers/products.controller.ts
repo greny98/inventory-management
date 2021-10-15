@@ -22,10 +22,10 @@ class ProductsController {
 
   public getAllProduct: RequestHandler = async (req, res, next) => {
     try {
-      const { page = 0, category, name } = req.query as IGetAllProducts;
+      const { page = 0, categories, name } = req.query as IGetAllProducts;
       const products: { rows: IProduct[]; count: number } = await this.productService.getAllProducts(
         page,
-        category,
+        categories,
         name,
       );
       res.status(201).json({ data: { count: products.count, products: products.rows } });

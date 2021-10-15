@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import { IProduct } from '@interfaces/products.interface';
 import { CategoryModel } from '@models/categories.model';
+import { InventoryModel } from './inventories.model';
 
 export type OptionalProductAttributes = Optional<IProduct, 'image'>;
 
@@ -43,7 +44,8 @@ export default function (sequelize: Sequelize): typeof ProductModel {
       sequelize,
     },
   );
-  ProductModel.belongsTo(CategoryModel, { foreignKey: { name: 'categoryId' }, as: 'category' });
+  ProductModel.belongsTo(CategoryModel, { foreignKey: { name: 'category_id' }, as: 'category' });
   // CategoryModel
+  // ProductModel.hasOne(InventoryModel, { foreignKey: { name: 'product_id' }, as: 'inventory' });
   return ProductModel;
 }
