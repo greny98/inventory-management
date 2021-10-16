@@ -36,7 +36,7 @@ class ProductRankService {
   }
 
   public async getAllProductRank(page: number, month?: number, year?: number): Promise<IProductRank[]> {
-    const limit = 10;
+    const limit = 50;
     const offset = page * limit;
     const where = {};
     if (year) {

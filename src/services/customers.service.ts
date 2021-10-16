@@ -8,7 +8,7 @@ class CustomerService {
   public customerModel = DB.Customers;
 
   public async getAllCustomers(page: number): Promise<ICustomer[]> {
-    const limit = 10;
+    const limit = 50;
     const offset = page * limit;
     return this.customerModel.findAll({ limit, offset });
   }

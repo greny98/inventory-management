@@ -8,7 +8,7 @@ class DistributorService {
   public distributorModel = DB.Distributors;
 
   public async getAlDistributors(page: number): Promise<IDistributor[]> {
-    const limit = 10;
+    const limit = 50;
     const offset = page * limit;
     return this.distributorModel.findAll({ limit, offset });
   }

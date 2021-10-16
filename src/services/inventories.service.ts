@@ -11,7 +11,7 @@ class InventoriesService {
   public inventories = DB.Inventories;
 
   public async getAllInventories(page: number, productName?: string, category?: number): Promise<IInventory[]> {
-    const limit = 10;
+    const limit = 50;
     const offset = page * limit;
     const whereCategory = {};
     const whereProduct = {};

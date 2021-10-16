@@ -29,7 +29,7 @@ class ProductService {
     category?: number,
     name?: string,
   ): Promise<{ rows: IProduct[]; count: number }> {
-    const limit = 10;
+    const limit = 50;
     const offset = page * limit;
     const whereProduct = {};
     const whereCategory = {};

@@ -19,7 +19,7 @@ class ProductStockInService {
   }
 
   public async getAllProductStockIn(page: number) {
-    const limit = 10;
+    const limit = 50;
     const offset = page * limit;
     return this.prodStockIn.findAll({
       limit,

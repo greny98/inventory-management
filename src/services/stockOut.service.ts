@@ -20,7 +20,7 @@ class StockOutService {
   }
 
   public async getAllStockOut(page: number, queryToday?: boolean) {
-    const limit = 10;
+    const limit = 50;
     const offset = page * limit;
     const whereDate = {};
     if (queryToday) {
@@ -33,7 +33,6 @@ class StockOutService {
     }
 
     return this.stockOut.findAndCountAll({
-      limit,
       offset,
       where: whereDate,
       include: [

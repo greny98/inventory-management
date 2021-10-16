@@ -13,11 +13,10 @@ class StockInService {
   public stockIn = DB.StockIn;
 
   public async getAllStockIn(page: number) {
-    const limit = 10;
+    const limit = 50;
     const offset = page * limit;
 
     return this.stockIn.findAndCountAll({
-      limit,
       offset,
       include: [
         {
