@@ -20,7 +20,7 @@ class InventoriesService {
     }
     if (productName) {
       whereProduct['name'] = {
-        [Sequelize.Op.like]: `%${name}%`,
+        [Sequelize.Op.like]: `%${productName}%`,
       };
     }
     return this.inventories.findAll({
