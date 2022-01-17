@@ -1,10 +1,10 @@
 {
   "env": "production",
   "dbConfig": {
-    "host": "localhost",
-    "user": "root",
-    "password": "tuan1234",
-    "database": "inventory_management",
+    "host": "sql6.freesqldatabase.com",
+    "user": "sql6466162",
+    "password": "cQmZLIK3L9",
+    "database": "sql6466162",
     "pool": {
       "min": 0,
       "max": 5
