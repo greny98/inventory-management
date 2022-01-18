@@ -1,10 +1,10 @@
 {
   "env": "production",
   "dbConfig": {
-    "host": "sql6.freesqldatabase.com",
-    "user": "sql6466162",
-    "password": "cQmZLIK3L9",
-    "database": "sql6466162",
+    "host": "db4free.net",
+    "user": "inventory284",
+    "password": "inventory284",
+    "database": "inventory284",
     "pool": {
       "min": 0,
       "max": 5

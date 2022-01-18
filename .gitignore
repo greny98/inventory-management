@@ -1,3 +1,6 @@
+# test 
+tests
+
 # Logs
 logs
 *.log
@@ -70,7 +73,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+# .env
 .env.test
 .env.production
 
