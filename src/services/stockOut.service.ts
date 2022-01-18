@@ -81,7 +81,7 @@ class StockOutService {
   }
 
   public async calcRevenue(month: number, year: number) {
-    const fromDate: Date = new Date(`${year}-${month}-01T00:00:00.000Z`);
+    const fromDate: Date = new Date(year, month - 1, 1);
     const toDate: Date = moment(fromDate).endOf('month').toDate();
     const stockOut = await this.filterDate(fromDate, toDate);
     let revenue = 0;
